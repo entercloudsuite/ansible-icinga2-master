@@ -16,7 +16,3 @@
     src: mailserver/mailname.j2
     dest: /etc/mailname
   notify: Restart mailserver
-
-- name: Set hostname domain
-  hostname:
-    name: "{{ ansible_hostname }}.{{ monitoring_domain }}"
