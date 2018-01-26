@@ -1,0 +1,14 @@
+---
+galaxy_info:
+  author: Davide Panarese
+  description: Playbook for Icinga2 Master.
+  company: Enter srl
+  license: MIT
+  min_ansible_version: 2.0
+  platforms:
+    - name: Ubuntu
+      versions:
+        - xenial
+	- trusty
+  galaxy_tags:
+    - molecule

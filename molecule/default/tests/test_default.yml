@@ -1,0 +1,24 @@
+---
+package:
+  Icinga2 Master:
+    installed: true
+port:
+  tcp:80:
+    listening: true
+    ip:
+      - 0.0.0.0
+service:
+  Icinga2 Master:
+    enabled: true
+    running: true
+user:
+  Icinga2 Master:
+    exists: true
+    groups:
+      - Icinga2 Master
+group:
+  Icinga2 Master:
+    exists: true
+process:
+  Icinga2 Master:
+    running: true
