@@ -1,10 +1,10 @@
-Ansible Role: Icinga2 Master 
+Ansible Role: Icinga2 Master + Icingaweb2 Dashboard
 ======================================
 
 [![Build Status](https://travis-ci.org/entercloudsuite/ansible-icinga2-master .svg?branch=master)](https://travis-ci.org/entercloudsuite/ansible-icinga2-master)
 [![Galaxy](https://img.shields.io/badge/galaxy-entercloudsuite.Icinga2 Master-blue.svg?style=flat-square)](https://galaxy.ansible.com/entercloudsuite/Icinga2 Master)  
 
-Installs Icinga2 Master on Ubuntu 16.04 (Xenial)
+Install Icinga2 Master + Icingaweb2 Dashboard on Ubuntu 14.04 (Trusty) or Ubuntu 16.04 (Xenial)
 
 ## Requirements
 
@@ -12,7 +12,7 @@ This role requires Ansible 2.0 or higher.
 
 ## Role Variables
 
-The role defines most of its variables in `defaults/main.yml`:
+The role defines its variables in `defaults/main.yml`:
 
 ## Example Playbook
 

@@ -1,0 +1,22 @@
+---
+
+- name: Install mailserver
+  apt:
+    name: postfix
+    state: present
+
+- name: Set mailserver configuration
+  template:
+    src: mailserver/main.cf.j2
+    dest: /etc/postfix/main.cf
+  notify: Restart mailserver
+
+- name: Set sender domain
+  template:
+    src: mailserver/mailname.j2
+    dest: /etc/mailname
+  notify: Restart mailserver
+
+- name: Set hostname domain
+  hostname:
+    name: "{{ ansible_hostname }}.{{ monitoring_domain }}"

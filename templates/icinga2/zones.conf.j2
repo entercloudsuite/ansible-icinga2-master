@@ -1,0 +1,37 @@
+/*
+ * Master zone
+ * Master endpoint definition
+ */
+
+object Endpoint "monitoring-master" {
+}
+
+object Zone "master" {
+        endpoints = [ "monitoring-master" ]
+}
+
+object Zone "global-templates" {
+        global = true
+}
+
+/*
+ * Clients zone
+ * Clients endpoint definition
+ */
+
+{% for client in groups.all|difference([icinga2_master_host]) %}
+object Endpoint "{{ hostvars[client].ansible_hostname }}" {
+        host = "{{ client }}"
+}
+
+object Zone "{{ hostvars[client].ansible_hostname }}-zone" {
+        endpoints = [ "{{ hostvars[client].ansible_hostname }}" ]
+        parent = "master"
+}
+
+{% endfor %}
+
+/*
+ * End clients zone
+ * End clients endpoint definition
+ */

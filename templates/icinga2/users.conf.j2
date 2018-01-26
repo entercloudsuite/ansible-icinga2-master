@@ -1,0 +1,38 @@
+/**
+ * Notification users
+ */
+
+object UserGroup "icingaadmins-mail" {
+  display_name = "Icinga 2 Mail Notification Group"
+}
+
+{% for item in icinga2_notification_users %}
+object User "{{ item.user }}" {
+  import "generic-user"
+
+  display_name = "{{ item.name }}"
+  groups = [ "icingaadmins-mail" ]
+
+  vars.customer_name = "{{ environment_name }}"
+  email = "{{ item.email }}"
+}
+{% endfor %}
+
+{% if icinga2_notification_telegram is defined %}
+object UserGroup "icingaadmins-telegram" {
+  display_name = "Icinga 2 Telegram Notification Group"
+}
+
+{% for item in icinga2_notification_telegram %}
+object User "{{ item.name }}" {
+  import "generic-user"
+
+  display_name = "{{ item.name }}"
+  groups = [ "icingaadmins-telegram" ]
+
+  vars.customer_name = "{{ environment_name }}"
+  vars.telegram_chat_id = "{{ item.chat_id }}"
+  vars.telegram_bot_token = "{{ item.bot_token }}"
+}
+{% endfor %}
+{% endif %}

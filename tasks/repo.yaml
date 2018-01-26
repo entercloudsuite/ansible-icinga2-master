@@ -1,0 +1,27 @@
+---
+
+- name: REPOSITORY - Install prerequisites
+  apt:
+    name: software-properties-common
+    state: present
+    update_cache: yes
+
+- name: REPOSITORY - Get Mariadb keys
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: '0xF1656F24C74CD1D8'
+
+- name: REPOSITORY - Get Mariadb repository url
+  apt_repository:
+    repo: "deb [arch=amd64,i386,ppc64el] http://mariadb.mirrors.ovh.net/MariaDB/repo/10.2/ubuntu {{ ansible_distribution_release }} main"
+    state: present
+
+- name: REPOSITORY - Get Icinga2 keys
+  apt_key:
+    url: https://packages.icinga.com/icinga.key
+    state: present
+
+- name: REPOSITORY - Get Icinga2 repository url
+  apt_repository:
+    repo: "deb https://packages.icinga.com/ubuntu icinga-{{ ansible_distribution_release }} main"
+    state: present

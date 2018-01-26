@@ -1,0 +1,66 @@
+---
+environment_name: mymonitoring
+monitoring_domain: mymonitoring.com
+
+mysql_root_password: mysqlrootpassword
+
+icinga2_mysql_database: icinga2
+icinga2_mysql_user: icinga2
+icinga2_mysql_password: icinga2
+
+icingaweb2_mysql_database: icingaweb2
+icingaweb2_mysql_user: icingaweb2
+icingaweb2_mysql_password: icingaweb2
+
+icinga2_mysql_users:
+  - user: "{{ icinga2_mysql_user }}"
+    password: "{{ icinga2_mysql_password }}"
+    database: "{{ icinga2_mysql_database }}"
+    host: localhost
+    privileges: "{{ icinga2_mysql_database }}.*:ALL,GRANT"
+  - user: "{{ icingaweb2_mysql_user }}"
+    password: "{{ icingaweb2_mysql_password }}"
+    database: "{{ icingaweb2_mysql_database }}"
+    host: localhost
+    privileges: "{{ icingaweb2_mysql_database }}.*:ALL,GRANT"
+
+icinga2_api_root_password: password
+icinga2_api_admin_user: admin
+icinga2_api_admin_password: admin
+
+# 
+icinga2_api_ticket_salt: 23930b9fadc9bfddbb4fe5875f5f6f2f
+
+# icinga2_master_host: "{{ groups['icinga2-master'][0] }}"
+icinga2_master_host: "127.0.0.1"
+
+icinga2_notification_period: 3600
+icinga2_notification_users:
+  - user: icingaadmin
+    name: "Icinga Administrator"
+    email: root@localhost
+
+# You can add more notification users
+#icinga2_notification_users:
+#  - user: icingaadmin
+#    name: "Icinga Administrator"
+#    email: root@localhost
+#  - user: icingauser2
+#    name: "Icinga User"
+#    email: root2@localhost
+
+icinga2_notification_telegram:
+  - name: "Icinga2 Telegram"
+    chat_id: 111111111
+    bot_token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+# You can add more notification telegram groups
+#icinga2_notification_telegram:
+#  - name: "Icinga2 Telegram user 1"
+#    chat_id: 111111111
+#    bot_token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+#  - name: "Icinga2 Telegram user2"
+#    chat_id: 222222222
+#    bot_token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+server_timezone: UTC

@@ -1,0 +1,7 @@
+---
+
+- include: repo.yaml
+- include: mailserver.yaml
+- include: mariadb.yaml
+- include: icinga2.yaml
+- include: icingaweb2.yaml

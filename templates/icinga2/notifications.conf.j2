@@ -1,0 +1,42 @@
+/**
+ * Mail notification
+ */
+
+apply Notification "mail-icingaadmin" to Host {
+  import "mail-host-notification"
+  interval = {{ icinga2_notification_period }}
+
+  user_groups = [ "icingaadmins-mail"]
+
+  assign where host.vars.notification_mail == "mail"
+}
+apply Notification "mail-icingaadmin" to Service {
+  import "mail-service-notification"
+  interval = {{ icinga2_notification_period }}
+
+  user_groups = [ "icingaadmins-mail"]
+
+  assign where service.vars.notification_mail == "true"
+}
+{% if icinga2_notification_telegram is defined %}
+/**
+ * Telegram notification
+ */
+
+apply Notification "telegram-icingaadmin" to Host {
+  import "telegram-host-notification"
+  interval = {{ icinga2_notification_period }}
+
+  user_groups = [ "icingaadmins-telegram"]
+
+  assign where host.vars.notification_telegram == "telegram"
+}
+apply Notification "telegram-icingaadmin" to Service {
+  import "telegram-service-notification"
+  interval = {{ icinga2_notification_period }}
+
+  user_groups = [ "icingaadmins-telegram"]
+
+  assign where service.vars.notification_telegram == "true"
+}
+{% endif %}

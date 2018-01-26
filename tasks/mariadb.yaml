@@ -1,0 +1,81 @@
+---
+
+- name: Install MariaDB server
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - mariadb-server-10.2
+    - python-mysqldb
+  register: mariadb_bootstrap
+
+- name: Setting mysql root access - bootstrap
+  mysql_user:
+    host: "{{ item.host }}"
+    name: "{{ item.user }}"
+    password: "{{ item.password }}"
+    priv: "{{ item.privileges }}"
+    check_implicit_admin: yes
+  with_items:
+    - host: "{{ ansible_hostname }}"
+      user: root
+      password: "{{ mysql_root_password }}"
+      privileges: "*.*:ALL,GRANT"
+    - host: "127.0.0.1"
+      user: root
+      password: "{{ mysql_root_password }}"
+      privileges: "*.*:ALL,GRANT"
+    - host: "localhost"
+      user: root
+      password: "{{ mysql_root_password }}"
+      privileges: "*.*:ALL,GRANT"
+  when: mariadb_bootstrap.changed
+
+- name: Setting mysql root access
+  mysql_user:
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    host: "{{ item.host }}"
+    name: "{{ item.user }}"
+    password: "{{ item.password }}"
+    priv: "{{ item.privileges }}"
+    check_implicit_admin: yes
+  with_items:
+    - host: "{{ ansible_hostname }}"
+      user: root
+      password: "{{ mysql_root_password }}"
+      privileges: "*.*:ALL,GRANT"
+    - host: "127.0.0.1"
+      user: root
+      password: "{{ mysql_root_password }}"
+      privileges: "*.*:ALL,GRANT"
+    - host: "localhost"
+      user: root
+      password: "{{ mysql_root_password }}"
+      privileges: "*.*:ALL,GRANT"
+  when: not mariadb_bootstrap.changed
+
+- name: Setting mysql additional users access
+  mysql_user:
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    host: "{{ item.host }}"
+    name: "{{ item.user }}"
+    password: "{{ item.password }}"
+    priv: "{{ item.privileges }}"
+    check_implicit_admin: yes
+  with_items: "{{ icinga2_mysql_users }}"
+
+- name: Create all databases
+  mysql_db:
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    name: "{{ item.database }}"
+    state: present
+  with_items: "{{ icinga2_mysql_users }}"
+
+- name: Setting mysql client file
+  template:
+    src: database/mysql.client.j2
+    dest: /root/.my.cnf

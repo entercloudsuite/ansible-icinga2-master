@@ -1,0 +1,172 @@
+/* Command objects */
+
+/* Notification Commands
+ *
+ * Please check the documentation for all required and
+ * optional parameters.
+ */
+
+object NotificationCommand "mail-host-notification" {
+  command = [ SysconfDir + "/icinga2/scripts/mail-host-notification.sh" ]
+
+  arguments += {
+    "-4" = "$notification_address$"
+    "-6" = "$notification_address6$"
+    "-b" = "$notification_author$"
+    "-c" = "$notification_comment$"
+    "-d" = {
+      required = true
+      value = "$notification_date$"
+    }
+    "-f" = {
+      value = "nagios@{{ monitoring_domain }}"
+      description = "Set from address. Requires GNU mailutils (Debian/Ubuntu) or mailx (RHEL/SUSE)"
+    }
+    "-i" = "$notification_icingaweb2url$"
+    "-l" = {
+      required = true
+      value = "$notification_hostname$"
+    }
+    "-n" = {
+      required = true
+      value = "$notification_hostdisplayname$"
+    }
+    "-o" = {
+      required = true
+      value = "$notification_hostoutput$"
+    }
+    "-r" = {
+      required = true
+      value = "$notification_useremail$"
+    }
+    "-s" = {
+      required = true
+      value = "$notification_hoststate$"
+    }
+    "-t" = {
+      required = true
+      value = "$notification_type$"
+    }
+    "-v" = "$notification_logtosyslog$"
+  }
+
+  vars += {
+    notification_address = "$address$"
+    notification_address6 = "$address6$"
+    notification_author = "$notification.author$"
+    notification_comment = "$notification.comment$"
+    notification_type = "$notification.type$"
+    notification_date = "$icinga.long_date_time$"
+    notification_hostname = "$host.name$"
+    notification_hostdisplayname = "$host.display_name$"
+    notification_hostoutput = "$host.output$"
+    notification_hoststate = "$host.state$"
+    notification_useremail = "$user.email$"
+  }
+}
+
+object NotificationCommand "mail-service-notification" {
+  command = [ SysconfDir + "/icinga2/scripts/mail-service-notification.sh" ]
+
+  arguments += {
+    "-4" = "$notification_address$"
+    "-6" = "$notification_address6$"
+    "-b" = "$notification_author$"
+    "-c" = "$notification_comment$"
+    "-d" = {
+      required = true
+      value = "$notification_date$"
+    }
+    "-e" = {
+      required = true
+      value = "$notification_servicename$"
+    }
+    "-f" = {
+      value = "nagios@{{ monitoring_domain }}"
+      description = "Set from address. Requires GNU mailutils (Debian/Ubuntu) or mailx (RHEL/SUSE)"
+    }
+    "-i" = "$notification_icingaweb2url$"
+    "-l" = {
+      required = true
+      value = "$notification_hostname$"
+    }
+    "-n" = {
+      required = true
+      value = "$notification_hostdisplayname$"
+    }
+    "-o" = {
+      required = true
+      value = "$notification_serviceoutput$"
+    }
+    "-r" = {
+      required = true
+      value = "$notification_useremail$"
+    }
+    "-s" = {
+      required = true
+      value = "$notification_servicestate$"
+    }
+    "-t" = {
+      required = true
+      value = "$notification_type$"
+    }
+    "-u" = {
+      required = true
+      value = "$notification_servicedisplayname$"
+    }
+    "-v" = "$notification_logtosyslog$"
+  }
+
+  vars += {
+    notification_address = "$address$"
+    notification_address6 = "$address6$"
+    notification_author = "$notification.author$"
+    notification_comment = "$notification.comment$"
+    notification_type = "$notification.type$"
+    notification_date = "$icinga.long_date_time$"
+    notification_hostname = "$host.name$"
+    notification_hostdisplayname = "$host.display_name$"
+    notification_servicename = "$service.name$"
+    notification_serviceoutput = "$service.output$"
+    notification_servicestate = "$service.state$"
+    notification_useremail = "$user.email$"
+    notification_servicedisplayname = "$service.display_name$"
+  }
+}
+
+object NotificationCommand "telegram-host-notification" {
+  import "plugin-notification-command"
+
+  command = [
+  SysconfDir + "/icinga2/scripts/telegram_notify.py",
+  "--token", "$user.vars.telegram_bot_token$",
+  "--object_type", "host",
+  "--contact", "$user.vars.telegram_chat_id$",
+  "--notificationtype", "$notification.type$",
+  "--hoststate", "$host.state$",
+  "--hostname", "$host.display_name$",
+  "--output", "$host.output$",
+  "--customer", "$user.vars.customer_name$",
+  "--notification_author", "$notification.author$",
+  "--notification_comment", "$notification.comment$",
+  ]
+}
+
+object NotificationCommand "telegram-service-notification" {
+  import "plugin-notification-command"
+
+  command = [
+  SysconfDir + "/icinga2/scripts/telegram_notify.py",
+  "--token", "$user.vars.telegram_bot_token$",
+  "--object_type", "service",
+  "--contact", "$user.vars.telegram_chat_id$",
+  "--notificationtype", "$notification.type$",
+  "--servicedesc", "$service.display_name$",
+  "--servicestate", "$service.state$",
+  "--hostname", "$host.display_name$",
+  "--output", "$service.output$",
+  "--customer", "$user.vars.customer_name$",
+  "--notification_author", "$notification.author$",
+  "--notification_comment", "$notification.comment$",
+  ]
+}

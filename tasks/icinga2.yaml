@@ -1,0 +1,128 @@
+---
+
+- name: Install Icinga2
+  apt:
+    name: icinga2
+    state: present
+    update_cache: yes
+  register: icinga2_bootstrap
+
+- name: Install icinga2 utilities
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - icinga2-ido-mysql
+    - monitoring-plugins
+    - mailutils
+    - python-pip
+
+- name: Import icinga2 mysql schema
+  mysql_db:
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    state: import
+    name: "{{ icinga2_mysql_database }}"
+    target: /usr/share/icinga2-ido-mysql/schema/mysql.sql
+  when: icinga2_bootstrap.changed
+
+- name: Install icinga2 features
+  shell: icinga2 feature enable "{{ item }}"
+  with_items:
+    - checker
+    - command
+    - ido-mysql
+    - mainlog
+    - notification
+  when: icinga2_bootstrap.changed
+
+- name: Install icinga2 notification dependencies
+  pip:
+    name: telepot
+    state: present
+
+- name: Configure icinga2 ido mysql
+  template:
+    src: icinga2/ido-mysql.conf.j2
+    dest: /etc/icinga2/features-available/ido-mysql.conf
+
+- name: Setup icinga2 API
+  shell: icinga2 api setup
+  when: icinga2_bootstrap.changed
+
+- name: Setup icinga2 master node
+  shell: icinga2 node setup --cn monitoring-master --master
+  when: icinga2_bootstrap.changed
+
+- name: Setup icinga2 api configuration
+  template:
+    src: icinga2/api-users.conf.j2
+    dest: /etc/icinga2/conf.d/api-users.conf
+
+- name: Setup icinga2 api constant file
+  template:
+    src: icinga2/constants.conf.j2
+    dest: /etc/icinga2/constants.conf
+
+- name: Remove default icinga files
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - /etc/icinga2/conf.d/hosts.conf
+    - /etc/icinga2/conf.d/services.conf
+    - /etc/icinga2/conf.d/apt.conf
+
+- name: Setting master default configuration
+  copy:
+    src: ../files/conf.d/
+    dest: /etc/icinga2/conf.d/
+
+- name: Setting notification users
+  template:
+    src: icinga2/users.conf.j2
+    dest: /etc/icinga2/conf.d/users.conf
+
+- name: Setting notification template
+  template:
+    src: icinga2/notifications.conf.j2
+    dest: /etc/icinga2/conf.d/notifications.conf
+
+- name: Setting notification definition
+  template:
+    src: icinga2/commands.conf.j2
+    dest: /etc/icinga2/conf.d/commands.conf
+
+- name: Get notifications scripts
+  copy:
+    src: ../files/scripts/
+    dest: /etc/icinga2/scripts/
+    mode: 0755
+
+- name: Setting zone definition
+  template:
+    src: icinga2/zones.conf.j2
+    dest: /etc/icinga2/zones.conf
+
+- name: Reset check zone
+  file:
+    path: /etc/icinga2/zones.d/master
+    force: yes
+    state: absent
+
+- name: Create check zone
+  file:
+    path: /etc/icinga2/zones.d/master
+    state: directory
+
+- name: Create check zones
+  template:
+    src: icinga2/check.hosts.conf.j2
+    dest: /etc/icinga2/zones.d/master/hosts.{{ hostvars[item].ansible_hostname }}.conf
+  with_items: groups.all|difference([icinga2_master_host])
+
+- name: Restart icinga2
+  service:
+    name: icinga2
+    state: restarted
