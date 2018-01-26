@@ -9,6 +9,6 @@ galaxy_info:
     - name: Ubuntu
       versions:
         - xenial
-	- trusty
+        - trusty
   galaxy_tags:
     - molecule
