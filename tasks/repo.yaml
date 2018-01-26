@@ -2,9 +2,12 @@
 
 - name: REPOSITORY - Install prerequisites
   apt:
-    name: software-properties-common
+    name: "{{ item }}"
     state: present
     update_cache: yes
+  with_items:
+    - apt-transport-https
+    - software-properties-common
 
 - name: REPOSITORY - Get Mariadb keys
   apt_key:
