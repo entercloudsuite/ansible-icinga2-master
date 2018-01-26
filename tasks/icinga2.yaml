@@ -28,7 +28,7 @@
   when: icinga2_bootstrap.changed
 
 - name: Install icinga2 features
-  shell: icinga2 feature enable "{{ item }}"
+  command: icinga2 feature enable "{{ item }}"
   with_items:
     - checker
     - command
@@ -48,11 +48,11 @@
     dest: /etc/icinga2/features-available/ido-mysql.conf
 
 - name: Setup icinga2 API
-  shell: icinga2 api setup
+  command: icinga2 api setup
   when: icinga2_bootstrap.changed
 
 - name: Setup icinga2 master node
-  shell: icinga2 node setup --cn monitoring-master --master
+  command: icinga2 node setup --cn monitoring-master --master
   when: icinga2_bootstrap.changed
 
 - name: Setup icinga2 api configuration

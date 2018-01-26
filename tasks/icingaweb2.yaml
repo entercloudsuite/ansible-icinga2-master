@@ -58,11 +58,11 @@
   register: icingaweb2_bootstrap
 
 - name: Create icingaweb2 setup token
-  shell: icingacli setup token create
+  command: icingacli setup token create
   when: icingaweb2_bootstrap.changed
 
 - name: Get icingaweb2 setup token
-  shell: icingacli setup token show
+  command: icingacli setup token show
   register: icingaweb2_token
   when: icingaweb2_bootstrap.changed
 
