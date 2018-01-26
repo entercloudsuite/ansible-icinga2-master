@@ -1,6 +1,5 @@
 ---
 lint:
-  name: tuamamma
   enabled: False
 dependency:
   name: galaxy
