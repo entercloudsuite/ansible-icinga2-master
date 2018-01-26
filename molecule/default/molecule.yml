@@ -1,5 +1,6 @@
 ---
 lint:
+  name: ansible-lint
   enabled: False
 dependency:
   name: galaxy
