@@ -2,7 +2,7 @@ Ansible Role: Icinga2 Master + Icingaweb2 Dashboard
 ======================================
 
 [![Build Status](https://travis-ci.org/entercloudsuite/ansible-icinga2-master.svg?branch=master)](https://travis-ci.org/entercloudsuite/ansible-icinga2-master)
-[![Galaxy](https://img.shields.io/badge/galaxy-entercloudsuite.ansible-icinga2-master-blue.svg?style=flat-square)](https://galaxy.ansible.com/entercloudsuite/ansible-icinga2-master)  
+[![Galaxy](https://img.shields.io/badge/galaxy-entercloudsuite.icinga2-master-blue.svg?style=flat-square)](https://galaxy.ansible.com/entercloudsuite/ansible-icinga2-master)  
 
 Install Icinga2 Master + Icingaweb2 Dashboard on Ubuntu 14.04 (Trusty) or Ubuntu 16.04 (Xenial)
 
