@@ -1,4 +1,5 @@
 ---
+
 galaxy_info:
   author: Davide Panarese
   description: Playbook for Icinga2 Master.
