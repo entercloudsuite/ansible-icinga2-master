@@ -1,7 +1,7 @@
 ---
 
 - name: Restart mailserver
-  service: 
+  service:
     name: postfix
     state: restarted
 
