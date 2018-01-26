@@ -12,5 +12,5 @@ service:
     enabled: true
     running: true
 process:
-  Icinga2 Master:
+  icinga2:
     running: true
