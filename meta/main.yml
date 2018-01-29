@@ -13,3 +13,5 @@ galaxy_info:
         - trusty
   galaxy_tags:
     - molecule
+    - monitoring
+    - icinga2
