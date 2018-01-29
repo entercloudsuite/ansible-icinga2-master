@@ -2,17 +2,17 @@
  * {{ item }} checks definition
  */
 
-object HostGroup "{{ hostvars[item].ansible_hostname }}" {
-        display_name = "{{ hostvars[item].ansible_hostname }}"
+object HostGroup "{{ hostvars[item]['ansible_hostname'] }}" {
+        display_name = "{{ hostvars[item]['ansible_hostname'] }}"
 }
 
 /*
  * {{ item }} host definition
  */
 
-object Host "{{ hostvars[item].ansible_hostname }}" {
+object Host "{{ hostvars[item]['ansible_hostname'] }}" {
   import "generic-host"
-  display_name = "{{ hostvars[item].ansible_hostname }}"
+  display_name = "{{ hostvars[item]['ansible_hostname'] }}"
   address = "{{ item }}"
   vars.notification_mail = "true"
 {% if icinga2_notification_telegram is defined %}
@@ -20,8 +20,8 @@ object Host "{{ hostvars[item].ansible_hostname }}" {
 {% endif %}
   
   vars.os = "Linux"
-  vars.endpoint = "{{ hostvars[item].ansible_hostname }}"
-  groups =["{{ hostvars[item].ansible_hostname }}"]
+  vars.endpoint = "{{ hostvars[item]['ansible_hostname'] }}"
+  groups =["{{ hostvars[item]['ansible_hostname'] }}"]
 }
 
 /*
@@ -43,7 +43,7 @@ apply Service "check disk" {
   vars.disk_all = "true"
 
   command_endpoint = host.vars.endpoint
-  assign where "{{ hostvars[item].ansible_hostname }}" in host.groups
+  assign where "{{ hostvars[item]['ansible_hostname'] }}" in host.groups
 }
 
 apply Service "check load" {
@@ -63,5 +63,5 @@ apply Service "check load" {
   vars.load_cload15 = "10"
 
   command_endpoint = host.vars.endpoint
-  assign where "{{ hostvars[item].ansible_hostname }}" in host.groups
+  assign where "{{ hostvars[item]['ansible_hostname'] }}" in host.groups
 }

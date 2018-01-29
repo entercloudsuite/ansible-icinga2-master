@@ -10,6 +10,12 @@
     - python-mysqldb
   register: mariadb_bootstrap
 
+- name: Start MariaDB server
+  service:
+    name: mysql
+    state: started
+  when: mariadb_bootstrap.changed
+
 - name: Setting mysql root access - bootstrap
   mysql_user:
     host: "{{ item.host }}"

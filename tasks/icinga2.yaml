@@ -18,6 +18,11 @@
     - mailutils
     - python-pip
 
+- name: Install icinga2 notification dependencies
+  pip:
+    name: telepot
+    state: present
+
 - name: Import icinga2 mysql schema
   mysql_db:
     login_user: root
@@ -36,11 +41,6 @@
     - mainlog
     - notification
   when: icinga2_bootstrap.changed
-
-- name: Install icinga2 notification dependencies
-  pip:
-    name: telepot
-    state: present
 
 - name: Configure icinga2 ido mysql
   template:
@@ -119,8 +119,8 @@
 - name: Create check zones
   template:
     src: icinga2/check.hosts.conf.j2
-    dest: /etc/icinga2/zones.d/master/hosts.{{ hostvars[item].ansible_hostname }}.conf
-  with_items: groups.all|difference([icinga2_master_host])
+    dest: /etc/icinga2/zones.d/master/hosts.{{ hostvars[item]['ansible_hostname'] }}.conf
+  with_items: "{{ groups['all']|difference([icinga2_master_host]) }}"
 
 - name: Restart icinga2
   service:
