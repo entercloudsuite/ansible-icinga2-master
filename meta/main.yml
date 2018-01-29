@@ -5,7 +5,7 @@ galaxy_info:
   description: Playbook for Icinga2 Master.
   company: Enter srl
   license: MIT
-  min_ansible_version: 2.4
+  min_ansible_version: 2.3
   platforms:
     - name: Ubuntu
       versions:
