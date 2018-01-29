@@ -6,11 +6,8 @@ port:
   tcp:80:
     listening: true
     ip:
-      - 0.0.0.0
+      - 127.0.0.1
 service:
   icinga2:
     enabled: true
-    running: true
-process:
-  icinga2:
     running: true
