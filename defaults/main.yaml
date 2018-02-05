@@ -2,6 +2,7 @@
 
 environment_name: mymonitoring
 monitoring_domain: mymonitoring.com
+fqdn_local_mailserver: monitoring.{{ monitoring_domain }}
 
 mysql_root_password: mysqlrootpassword
 
@@ -29,7 +30,10 @@ icinga2_api_root_password: password
 icinga2_api_admin_user: admin
 icinga2_api_admin_password: admin
 
-#
+# For manual setup of Icingaweb2
+icingaweb2_dashboard_user: admin
+icingaweb2_dashboard_password: admin
+
 icinga2_api_ticket_salt: 23930b9fadc9bfddbb4fe5875f5f6f2f
 
 # icinga2_master_host: "{{ groups['icinga2-master'][0] }}"
