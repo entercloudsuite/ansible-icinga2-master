@@ -19,7 +19,7 @@ object Zone "global-templates" {
  * Clients endpoint definition
  */
 
-{% for client in groups['all']|difference([icinga2_master_host]) %}
+{% for client in groups['icinga2_client'] %}
 object Endpoint "{{ hostvars[client]['ansible_hostname'] }}" {
         host = "{{ client }}"
 }

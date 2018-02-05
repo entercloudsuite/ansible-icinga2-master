@@ -76,7 +76,7 @@
 
 - name: Setting master default configuration
   copy:
-    src: ../files/conf.d/
+    src: "{{ role_path }}/files/conf.d/"
     dest: /etc/icinga2/conf.d/
 
 - name: Setting notification users
@@ -96,7 +96,7 @@
 
 - name: Get notifications scripts
   copy:
-    src: ../files/scripts/
+    src: "{{ role_path }}/files/scripts/"
     dest: /etc/icinga2/scripts/
     mode: 0755
 
@@ -120,7 +120,7 @@
   template:
     src: icinga2/check.hosts.conf.j2
     dest: /etc/icinga2/zones.d/master/hosts.{{ hostvars[item]['ansible_hostname'] }}.conf
-  with_items: "{{ groups['all']|difference([icinga2_master_host]) }}"
+  with_items: "{{ groups['icinga2_client'] }}"
 
 - name: Restart icinga2
   service:
