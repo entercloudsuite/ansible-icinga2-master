@@ -3,4 +3,4 @@
 - name: run the main role
   hosts: all
   roles:
-    - {role: icinga2-master}
+    - {role: ansible-icinga2-master}
