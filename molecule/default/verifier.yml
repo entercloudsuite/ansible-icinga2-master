@@ -1,6 +1,6 @@
 ---
 - name: Verify
-  hosts: all
+  hosts: icinga2_master
   vars:
     goss_version: v0.2.5
     goss_arch: amd64
