@@ -1,9 +1,12 @@
 ---
 
+- hosts: all
+  gather_facts: True
+
 - name: run the main role
   become: true
   become_method: sudo
   become_user: root
-  hosts: all
+  hosts: icinga2_master
   roles:
     - {role: ansible-icinga2-master}

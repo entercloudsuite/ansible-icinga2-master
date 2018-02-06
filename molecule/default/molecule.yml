@@ -6,7 +6,12 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: instance-1
+  - name: master
+    groups:
+      - icinga2_master
+  - name: client
+    groups:
+      - icinga2_client
 provisioner:
   name: ansible
   options:
