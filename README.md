@@ -65,9 +65,31 @@ The role defines its variables in `defaults/main.yml`:
 
 Run with default vars:
 
-    - hosts: all
+    ---
+
+    - name: install icinga2 master
+      hosts: icinga2_master
+      tags: master
       roles:
-        - { role: ansible-icinga2-master }
+        - role: ansible-icinga2-master
+          tags: master
+      vars:
+        - server_timezone: UTC
+        - environment_name: example
+        - monitoring_domain: example.com
+        - icinga2_mysql_password: password
+        - icingaweb2_mysql_password: password
+        - icingaweb2_dashboard_user: admin
+        - icingaweb2_dashboard_password: password
+        - icinga2_api_root_password: password
+        - icinga2_api_admin_password: password
+        - icinga2_api_ticket_salt: 23930b9fadc9bfddbb4fe5875f5f6f2f 
+        - icinga2_master_host: "127.0.0.1"
+        - icinga2_notification_period: 3600
+        - icinga2_notification_users:
+            - user: icingaadmin
+              name: "Icinga ADmin"
+              email: root@localhost
 
 ## Testing
 
