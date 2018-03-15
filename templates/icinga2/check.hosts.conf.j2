@@ -41,6 +41,7 @@ apply Service "check disk" {
   vars.disk_cfree = "5%"
   vars.disk_mountpoint = "true"
   vars.disk_all = "true"
+  vars.disk_ignore_eregi_path = ["/var/lib/docker/*", "/run/docker/netns/*"]
 
   command_endpoint = host.vars.endpoint
   assign where "{{ hostvars[item]['ansible_hostname'] }}" in host.groups
