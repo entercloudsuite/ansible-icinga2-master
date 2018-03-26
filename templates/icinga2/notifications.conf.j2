@@ -8,7 +8,7 @@ apply Notification "mail-icingaadmin" to Host {
 
   user_groups = [ "icingaadmins-mail"]
 
-  assign where host.vars.notification_mail == "mail"
+  assign where host.vars.notification_mail == "true"
 }
 apply Notification "mail-icingaadmin" to Service {
   import "mail-service-notification"
@@ -29,7 +29,7 @@ apply Notification "telegram-icingaadmin" to Host {
 
   user_groups = [ "icingaadmins-telegram"]
 
-  assign where host.vars.notification_telegram == "telegram"
+  assign where host.vars.notification_telegram == "true"
 }
 apply Notification "telegram-icingaadmin" to Service {
   import "telegram-service-notification"
