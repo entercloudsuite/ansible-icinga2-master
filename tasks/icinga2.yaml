@@ -125,4 +125,5 @@
 - name: Restart icinga2
   service:
     name: icinga2
+    enabled: yes
     state: restarted
