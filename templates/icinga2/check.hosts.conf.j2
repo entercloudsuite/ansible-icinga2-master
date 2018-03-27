@@ -1,13 +1,13 @@
 /*
- * {{ item }} checks definition
+ * {{ hostvars[item]['ansible_hostname'] }} checks definition
  */
 
 object HostGroup "{{ hostvars[item]['ansible_hostname'] }}" {
-        display_name = "{{ hostvars[item]['ansible_hostname'] }}"
+  display_name = "{{ hostvars[item]['ansible_hostname'] }}"
 }
 
 /*
- * {{ item }} host definition
+ * {{ hostvars[item]['ansible_hostname'] }} host definition
  */
 
 object Host "{{ hostvars[item]['ansible_hostname'] }}" {
@@ -18,6 +18,16 @@ object Host "{{ hostvars[item]['ansible_hostname'] }}" {
 {% if icinga2_notification_telegram is defined %}
   vars.notification_telegram = "true"
 {% endif %}
+
+{% if icinga2_host_url_check is defined %}
+{% for obj in icinga2_host_url_check %}
+{% if hostvars[item]['inventory_hostname'] in groups[obj.ansible_group] %}
+  vars.http_url["{{ obj.url }}"] = {
+    http_uri = "{{ obj.path }}"
+  }
+{% endif %}
+{% endfor %}
+{% endif %}
   
   vars.os = "Linux"
   vars.endpoint = "{{ hostvars[item]['ansible_hostname'] }}"
@@ -25,7 +35,7 @@ object Host "{{ hostvars[item]['ansible_hostname'] }}" {
 }
 
 /*
- * {{ item }} services definition
+ * {{ hostvars[item]['ansible_hostname'] }} services definition
  */
 
 apply Service "check disk" {

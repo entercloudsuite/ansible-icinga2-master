@@ -1,0 +1,17 @@
+## OPTIONAL SERVICE DEFINITION ##
+
+apply Service "URL Check - " for (http_vhost => config in host.vars.http_url) {
+  import "generic-service"
+  check_command = "http"
+  vars.notification_mail = "true"
+{% if icinga2_notification_telegram is defined %}
+  vars.notification_telegram = "true"
+{% endif %}
+
+  vars += config
+  notes = "HTTP checks for " + http_vhost
+  vars.http_vhost = http_vhost
+  vars.http_uri = config.http_uri
+
+  assign where host.vars.http_url
+}

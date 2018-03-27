@@ -54,6 +54,15 @@ The role defines its variables in `defaults/main.yml`:
 |-|chat_id|111111111|
 |-|bot_token|xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx|
 
+### ICINGA2 OPTIONAL HOST/SERVICE CHECK
+|VARIABLE|DESCRIPTION|DEFAULT VALUE|
+|--------|-----------|-------------|
+|icinga2_host_url_check (Multi value)|List of web url to check per webserver group|-|
+|-|url|www.example.com|
+|-|path|/index.html|
+|-|ansible_group|webserver|
+|--------|-----------|-------------|
+
 ### ICINGAWEB2
 |VARIABLE|DESCRIPTION|DEFAULT VALUE|
 |--------|-----------|-------------|

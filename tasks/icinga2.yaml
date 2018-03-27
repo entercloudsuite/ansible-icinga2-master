@@ -89,6 +89,11 @@
     src: icinga2/notifications.conf.j2
     dest: /etc/icinga2/conf.d/notifications.conf
 
+- name: Setting custom services template
+  template:
+    src: icinga2/check.services.conf.j2
+    dest: /etc/icinga2/conf.d/check.services.conf
+
 - name: Setting notification definition
   template:
     src: icinga2/commands.conf.j2

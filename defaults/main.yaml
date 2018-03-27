@@ -34,6 +34,12 @@ icinga2_api_ticket_salt: 23930b9fadc9bfddbb4fe5875f5f6f2f
 # icinga2_master_host: "{{ groups['icinga2-master'][0] }}"
 icinga2_master_host: "127.0.0.1"
 
+# ICINGA2 OPTIONAL CHECK
+icinga2_host_url_check:
+  - url: 'www.example.com'
+    path: '/index.html'
+    ansible_group: 'webserver'
+
 # ICINGA2 NOTIFICATION
 icinga2_notification_period: 3600
 icinga2_notification_users:
