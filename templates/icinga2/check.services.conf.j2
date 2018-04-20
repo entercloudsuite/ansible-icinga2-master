@@ -15,3 +15,31 @@ apply Service "URL Check - " for (http_vhost => config in host.vars.http_url) {
 
   assign where host.vars.http_url
 }
+
+apply Service "Mysql Check" {
+  import "generic-service"
+  check_command = "mysql"
+  vars.notification_mail = "true"
+{% if icinga2_notification_telegram is defined %}
+  vars.notification_telegram = "true"
+{% endif %}
+
+  vars.mysql_user = host.vars.mysql_username
+  vars.mysql_password = host.vars.mysql_password
+
+  assign where host.vars.mysql == true
+}
+
+apply Service "Elasticsearch Check" {
+  import "generic-service"
+  check_command = "elasticsearch-server"
+  vars.notification_mail = "true"
+{% if icinga2_notification_telegram is defined %}
+  vars.notification_telegram = "true"
+{% endif %}
+
+  vars.elasticsearch_host = host.vars.endpoint
+  vars.elasticsearch_port = host.vars.elasticsearch_port
+
+  assign where host.vars.elasticsearch == true
+}

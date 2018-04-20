@@ -29,6 +29,25 @@ object Host "{{ hostvars[item]['ansible_hostname'] }}" {
 {% endfor %}
 {% endif %}
   
+{% if icinga2_host_mysql_check is defined %}
+{% for obj in icinga2_host_mysql_check %}
+{% if hostvars[item]['inventory_hostname'] in groups[obj.group] %}
+  vars.mysql = true
+  vars.mysql_username = "{{ obj.mysql_username }}"
+  vars.mysql_password = "{{ obj.mysql_password }}"
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if icinga2_host_elasticsearch_check is defined %}
+{% for obj in icinga2_host_elasticsearch_check %}
+{% if hostvars[item]['inventory_hostname'] in groups[obj.group] %}
+  vars.elasticsearch = true
+  vars.elasticsearch_port = "{{ obj.es_port }}"
+{% endif %}
+{% endfor %}
+{% endif %}
+
   vars.os = "Linux"
   vars.endpoint = "{{ hostvars[item]['ansible_hostname'] }}"
   groups =["{{ hostvars[item]['ansible_hostname'] }}"]

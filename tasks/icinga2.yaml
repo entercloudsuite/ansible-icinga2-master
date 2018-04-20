@@ -79,6 +79,14 @@
     src: "{{ role_path }}/files/conf.d/"
     dest: /etc/icinga2/conf.d/
 
+- name: Copy additional plugins
+  copy:
+    src: "{{ role_path }}/files/plugins/"
+    dest: /usr/lib/nagios/plugins/
+
+- name: Set executable additional plugins
+  shell: chmod +x /usr/lib/nagios/plugins/*
+
 - name: Setting notification users
   template:
     src: icinga2/users.conf.j2

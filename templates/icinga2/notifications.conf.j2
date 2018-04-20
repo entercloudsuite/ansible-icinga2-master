@@ -4,7 +4,7 @@
 
 apply Notification "mail-icingaadmin" to Host {
   import "mail-host-notification"
-  interval = {{ icinga2_notification_period }}
+  interval = {{ icinga2_host_notification_period }}
 
   user_groups = [ "icingaadmins-mail"]
 
@@ -12,7 +12,7 @@ apply Notification "mail-icingaadmin" to Host {
 }
 apply Notification "mail-icingaadmin" to Service {
   import "mail-service-notification"
-  interval = {{ icinga2_notification_period }}
+  interval = {{ icinga2_service_notification_period }}
 
   user_groups = [ "icingaadmins-mail"]
 
@@ -25,7 +25,7 @@ apply Notification "mail-icingaadmin" to Service {
 
 apply Notification "telegram-icingaadmin" to Host {
   import "telegram-host-notification"
-  interval = {{ icinga2_notification_period }}
+  interval = {{ icinga2_host_notification_period }}
 
   user_groups = [ "icingaadmins-telegram"]
 
@@ -33,7 +33,7 @@ apply Notification "telegram-icingaadmin" to Host {
 }
 apply Notification "telegram-icingaadmin" to Service {
   import "telegram-service-notification"
-  interval = {{ icinga2_notification_period }}
+  interval = {{ icinga2_service_notification_period }}
 
   user_groups = [ "icingaadmins-telegram"]
 

@@ -1,76 +1,89 @@
 ---
 
 # GENERAL VARIABLES
-server_timezone: UTC
-environment_name: myinfra
-monitoring_domain: mydomain.com
-fqdn_local_mailserver: monitoring.{{ monitoring_domain }}
+server_timezone: "UTC"
+environment_name: "myinfra"
+monitoring_domain: "mydomain.com"
+fqdn_local_mailserver: "monitoring.{{ monitoring_domain }}"
 
 # DATABASE VARIABLES
-mysql_root_password: mysqlrootpassword
-icinga2_mysql_database: icinga2
-icinga2_mysql_user: icinga2
-icinga2_mysql_password: icinga2
-icingaweb2_mysql_database: icingaweb2
-icingaweb2_mysql_user: icingaweb2
-icingaweb2_mysql_password: icingaweb2
+mysql_root_password: "mysqlrootpassword"
+icinga2_mysql_database: "icinga2"
+icinga2_mysql_user: "icinga2"
+icinga2_mysql_password: "icinga2"
+icingaweb2_mysql_database: "icingaweb2"
+icingaweb2_mysql_user: "icingaweb2"
+icingaweb2_mysql_password: "icingaweb2"
 icinga2_mysql_users:
   - user: "{{ icinga2_mysql_user }}"
     password: "{{ icinga2_mysql_password }}"
     database: "{{ icinga2_mysql_database }}"
-    host: localhost
+    host: "localhost"
     privileges: "{{ icinga2_mysql_database }}.*:ALL,GRANT"
   - user: "{{ icingaweb2_mysql_user }}"
     password: "{{ icingaweb2_mysql_password }}"
     database: "{{ icingaweb2_mysql_database }}"
-    host: localhost
+    host: "localhost"
     privileges: "{{ icingaweb2_mysql_database }}.*:ALL,GRANT"
 
 # ICINGA2 VARIABLES
-icinga2_api_root_password: apirootsecret
-icinga2_api_admin_user: admin
-icinga2_api_admin_password: adminsecret
-icinga2_api_ticket_salt: 23930b9fadc9bfddbb4fe5875f5f6f2f
+icinga2_api_root_password: "apirootsecret"
+icinga2_api_admin_user: "admin"
+icinga2_api_admin_password: "adminsecret"
+icinga2_api_ticket_salt: "23930b9fadc9bfddbb4fe5875f5f6f2f"
 # icinga2_master_host: "{{ groups['icinga2-master'][0] }}"
-icinga2_master_host: "127.0.0.1"
+icinga2_master_host: "localhost"
 
 # ICINGA2 OPTIONAL CHECK
-#icinga2_host_url_check:
-#  - url: 'www.example.com'
-#    path: '/index.html'
-#    ansible_group: 'webserver'
+# Url http check on web host (http_check directly on localhost)
+# icinga2_host_url_check:
+#   - url: "www.example.com"
+#     path: "/"
+#     group: "webserver" # ansible group
+
+# Mysql check status
+# icinga2_host_mysql_check:
+#   - mysql_username: "mysql-user"
+#     mysql_password: "password"
+#     group: "database" # ansible group
+
+# Elasticsearch check status
+# icinga2_host_elasticsearch_check:
+#   - group: "elasticsearch" # ansible group
+#     es_port: "9200" # default elasticserach server port
 
 # ICINGA2 NOTIFICATION
-icinga2_notification_period: 3600
+icinga2_host_notification_period: "3600"
+icinga2_service_notification_period: "3600"
 icinga2_notification_users:
-  - user: icingaadmin
+  - user: "icingaadmin"
     name: "Icinga Administrator"
-    email: root@localhost
+    email: "root@localhost"
 
 # You can add more notification users
 # icinga2_notification_users:
-#   - user: icingaadmin
+#   - user: "icingaadmin"
 #     name: "Icinga Administrator"
-#     email: root@localhost
-#   - user: icingauser2
+#     email: "root@localhost"
+#   - user: "icingauser2"
 #     name: "Icinga User"
-#     email: root2@localhost
+#     email: "root2@localhost"
 
 #icinga2_notification_telegram:
 #  - name: "Icinga2 Telegram"
-#    chat_id: 111111111
-#    bot_token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+#    chat_id: "111111111"
+#    bot_token: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 # You can add more notification telegram groups
 # icinga2_notification_telegram:
 #   - name: "Icinga2 Telegram user 1"
-#     chat_id: 111111111
-#     bot_token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+#     chat_id: "111111111"
+#     bot_token: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 #   - name: "Icinga2 Telegram user2"
-#     chat_id: 222222222
-#     bot_token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+#     chat_id: "222222222"
+#     bot_token: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 # ICINGAWEB2 VARIABLES
 # For manual setup of Icingaweb2
-icingaweb2_dashboard_user: admin
-icingaweb2_dashboard_password: admin
+icingaweb2_dashboard_user: "admin"
+icingaweb2_dashboard_password: "admin"
