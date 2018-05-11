@@ -65,6 +65,15 @@
   command: icingacli setup token show
   register: icingaweb2_token
   when: icingaweb2_bootstrap.changed
+ 
+- name: Import icinga2 mysql schema
+  mysql_db:
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    state: import
+    name: "{{ icingaweb2_mysql_database }}"
+    target: /usr/share/icingaweb2/etc/schema/mysql.schema.sql
+  when: icingaweb2_bootstrap.changed
 
 - name: Set up icingaweb2 web wizard
   debug:
