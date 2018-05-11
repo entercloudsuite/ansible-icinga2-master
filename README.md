@@ -61,7 +61,7 @@ The role defines its variables in `defaults/main.yml`:
 |icinga2_host_url_check (Multi value)|List of web url to check per webserver group|-|
 |-|url|www.example.com|
 |-|path|/index.html|
-|-|group|webserver|
+|-|ansible_group|webserver|
 |--------|-----------|-------------|
 |icinga2_host_mysql_check (Multi value)|List of mysql server to check per database group|-|
 |-|mysql_username|mysql-user|
