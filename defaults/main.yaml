@@ -87,3 +87,4 @@ icinga2_notification_users:
 # For manual setup of Icingaweb2
 icingaweb2_dashboard_user: "admin"
 icingaweb2_dashboard_password: "admin"
+icingaweb2_webserver: true

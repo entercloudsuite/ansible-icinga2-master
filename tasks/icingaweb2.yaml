@@ -5,9 +5,7 @@
     name: "{{ item }}"
     state: present
   with_items:
-    - apache2
     - php7.0
-    - libapache2-mod-php7.0
     - php7.0-gd
     - php7.0-intl
     - php7.0-xml
@@ -16,22 +14,31 @@
     - php-imagick
   when: ansible_distribution_release == "xenial"
 
+- name: Xenial - Install icingaweb2 webserver
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - apache2
+    - libapache2-mod-php7.0
+  when: ansible_distribution_release == "xenial" and
+        icingaweb2_webserver
+
 - name: Xenial - Setup php timezone
   lineinfile:
     dest: /etc/php/7.0/apache2/php.ini
     regexp: ";date.timezone ="
     line: "date.timezone = {{ server_timezone }}"
   notify: Restart apache2
-  when: ansible_distribution_release == "xenial"
+  when: ansible_distribution_release == "xenial" and
+        icingaweb2_webserver
 
 - name: Trusty - Install icingaweb2 webserver
   apt:
     name: "{{ item }}"
     state: present
   with_items:
-    - apache2
     - php5
-    - libapache2-mod-php5
     - php5-gd
     - php5-intl
     - php5-xmlrpc
@@ -40,13 +47,24 @@
     - php5-imagick
   when: ansible_distribution_release == "trusty"
 
+- name: Trusty - Install icingaweb2 webserver
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - apache2
+    - libapache2-mod-php5
+  when: ansible_distribution_release == "trusty" and
+        icingaweb2_webserver
+
 - name: Trusty - Setup php timezone
   lineinfile:
     dest: /etc/php5/apache2/php.ini
     regexp: ";date.timezone ="
     line: "date.timezone = {{ server_timezone }}"
   notify: Restart apache2
-  when: ansible_distribution_release == "trusty"
+  when: ansible_distribution_release == "trusty" and
+        icingaweb2_webserver
 
 - name: Install icingaweb2
   apt:
