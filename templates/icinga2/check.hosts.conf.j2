@@ -85,12 +85,12 @@ apply Service "check load" {
 {% endif %}
 
   check_command = "load"
-  vars.load_wload1 = "5"
-  vars.load_wload5 = "5"
-  vars.load_wload15 = "5"
-  vars.load_cload1 = "10"
-  vars.load_cload5 = "10"
-  vars.load_cload15 = "10"
+  vars.load_wload1 = "{{ 3 * icinga_load_threshold_check }}"
+  vars.load_wload5 = "{{ 2 * icinga_load_threshold_check }}"
+  vars.load_wload15 = "{{ 1 * icinga_load_threshold_check }}"
+  vars.load_cload1 = "{{ 6 * icinga_load_threshold_check }}"
+  vars.load_cload5 = "{{ 5 * icinga_load_threshold_check }}"
+  vars.load_cload15 = "{{ 4 * icinga_load_threshold_check }}"
 
   command_endpoint = host.vars.endpoint
   assign where "{{ hostvars[item]['ansible_hostname'] }}" in host.groups
