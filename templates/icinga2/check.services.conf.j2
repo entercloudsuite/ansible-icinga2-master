@@ -12,6 +12,7 @@ apply Service "URL Check - " for (http_vhost => config in host.vars.http_url) {
   notes = "HTTP checks for " + http_vhost
   vars.http_vhost = http_vhost
   vars.http_uri = config.http_uri
+  vars.backup_downtime = config.backup_downtime
 
   assign where host.vars.http_url
 }
