@@ -25,7 +25,7 @@ object Host "{{ hostvars[item]['ansible_hostname'] }}" {
   vars.http_url["{{ obj.url }}"] = {
     http_uri = "{{ obj.path }}"
     {% if obj.backup_downtime is defined %}
-      vars.backup_downtime = "{{ obj.backup_downtime }}"
+      backup_downtime = "{{ obj.backup_downtime }}"
     {% endif %}
   }
 {% endif %}
