@@ -1,0 +1,68 @@
+#!/bin/bash
+
+# $1 - WARNING
+# $2 - CRITICAL
+
+WARNING=1
+CRITICAL=0
+HADOOP_BIN="/usr/local/hadoop/bin/hdfs"
+
+
+
+print_help() {
+
+echo ""
+echo "Hadoop cluster check"
+echo "Options:"
+echo "  -W/--warning)"
+echo "     Defines the warning threshold. Default is: 1"
+echo "  -C/--critical)"
+echo "     Defines the critical threshold. Default is: 0"
+
+}
+
+
+while test -n "$1"; do
+    case "$1" in
+        -help|-h)
+            print_help
+            exit 3
+            ;;
+        --warning|-W)
+            WARNING=$2
+            shift
+            ;;
+        --critical|-C)
+            CRITICAL=$2
+            shift
+	    ;;
+        *)
+        echo "Unknown argument: $1"
+        print_help
+        exit 3
+        ;;
+    esac
+    shift
+done
+
+
+num_nodes=$($HADOOP_BIN dfsadmin -report  | grep Live | awk -F "):"  '{ print  $1 }' | awk -F "(" '{ print $2 }')
+if [ $num_nodes -le $CRITICAL ]
+then
+    echo "CRITICAL - Nodes available $num_nodes"
+    exit 2
+fi
+
+
+if [ $num_nodes -le $WARNING ]
+then
+    echo "WARNING - Nodes available $num_nodes"
+    exit 1
+fi
+
+if [ $num_nodes -gt $WARNING ]
+then
+    echo "OK - Nodes available $num_nodes"
+    exit 0
+fi
+

@@ -51,6 +51,19 @@ object Host "{{ hostvars[item]['ansible_hostname'] }}" {
 {% endfor %}
 {% endif %}
 
+
+{% if icinga2_host_hadoop_check is defined %}
+{% for obj in icinga2_host_hadoop_check %}
+{% if hostvars[item]['inventory_hostname'] in groups[obj.group] %}
+  vars.hadoop = true
+  vars.hadoop_nodes_warning = "{{ obj.warning_nodes }}"
+  vars.hadoop_nodes_critical = "{{ obj.critical_nodes }}"
+{% endif %}
+{% endfor %}
+{% endif %}
+
+
+
   vars.os = "Linux"
   vars.endpoint = "{{ hostvars[item]['ansible_hostname'] }}"
   groups =["{{ hostvars[item]['ansible_hostname'] }}"]

@@ -44,3 +44,19 @@ apply Service "Elasticsearch Check" {
 
   assign where host.vars.elasticsearch == true
 }
+
+apply Service "Hadoop Check" {
+  import "generic-service"
+  check_command = "hadoop-server"
+  vars.notification_mail = "true"
+{% if icinga2_notification_telegram is defined %}
+  vars.notification_telegram = "true"
+{% endif %}
+
+  vars.hadoop_nodes_warning = host.vars.hadoop_nodes_warning
+  vars.hadoop_nodes_critical = host.vars.hadoop_nodes_critical
+  command_endpoint = host.vars.endpoint
+
+  assign where host.vars.hadoop == true
+}
+
