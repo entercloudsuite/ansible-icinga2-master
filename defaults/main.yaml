@@ -56,6 +56,16 @@ icinga_load_threshold_check: 2
 #   - group: "elasticsearch" # ansible group
 #     es_port: "9200" # default elasticserach server port
 
+# Count file/dir inside a path
+# icinga2_host_file_count_check:
+#   - filecount_path: "/mydir"
+#     file_count_type: "all"
+#     file_count_subs: "yes"
+#     file_count_warntype: "high"
+#     file_count_warncount: "50"
+#     file_count_critcount: "50"
+#     group: "webserver" # ansible group
+
 # ICINGA2 NOTIFICATION
 icinga2_host_notification_period: "3600"
 icinga2_service_notification_period: "3600"

@@ -60,3 +60,22 @@ apply Service "Hadoop Check" {
   assign where host.vars.hadoop == true
 }
 
+apply Service "File Count Check" for (folder => config in host.vars.filecount_path) {
+  import "generic-service"
+  check_command = "file-count"
+  vars.notification_mail = "true"
+{% if icinga2_notification_telegram is defined %}
+  vars.notification_telegram = "true"
+{% endif %}
+
+  vars += config
+  notes = "File Count Check for folder"
+  vars.file_count_type = config.file_count_type
+  vars.file_count_subs = config.file_count_subs
+  vars.file_count_warntype = config.file_count_warntype
+  vars.file_count_warncount = config.file_count_warncount
+  vars.file_count_critcount = config.file_count_critcount
+  vars.file_count_dir = config.folder
+
+  assign where host.vars.filecount_path
+}
