@@ -67,11 +67,11 @@ object Host "{{ hostvars[item]['ansible_hostname'] }}" {
 {% for obj in icinga2_host_file_count_check %}
 {% if hostvars[item]['inventory_hostname'] in groups[obj.group] %}
   vars.filecount_path["{{ obj.filecount_path }}"] = {
-    vars.file_count_type = "{{ obj.file_count_type }}"
-    vars.file_count_subs = "{{ obj.file_count_subs }}"
-    vars.file_count_warntype = "{{ obj.file_count_warntype }}"
-    vars.file_count_warncount = "{{ obj.file_count_warncount }}"
-    vars.file_count_critcount = "{{ obj.file_count_critcount }}"
+    file_count_type = "{{ obj.file_count_type }}"
+    file_count_subs = "{{ obj.file_count_subs }}"
+    file_count_warntype = "{{ obj.file_count_warntype }}"
+    file_count_warncount = "{{ obj.file_count_warncount }}"
+    file_count_critcount = "{{ obj.file_count_critcount }}"
   }
 {% endif %}
 {% endfor %}
