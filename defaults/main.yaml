@@ -56,6 +56,13 @@ icinga_load_threshold_check: 2
 #   - group: "elasticsearch" # ansible group
 #     es_port: "9200" # default elasticserach server port
 
+# Hadoop cluster available nodes
+#   - icinga2_host_hadoop_check:
+#      - group: "hadoop"
+#        warning_nodes: "3"
+#        critical_nodes: "0"
+
+
 # Count file/dir inside a path
 # icinga2_host_file_count_check:
 #   - filecount_path: "/mydir"
