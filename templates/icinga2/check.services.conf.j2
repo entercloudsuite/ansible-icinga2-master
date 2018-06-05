@@ -76,6 +76,7 @@ apply Service "File Count Check" for (folder => config in host.vars.filecount_pa
   vars.file_count_warncount = config.file_count_warncount
   vars.file_count_critcount = config.file_count_critcount
   vars.file_count_dir = folder
+  command_endpoint = host.vars.endpoint
 
   assign where host.vars.filecount_path
 }
