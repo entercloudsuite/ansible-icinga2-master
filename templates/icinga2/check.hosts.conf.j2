@@ -95,7 +95,7 @@ object Host "{{ hostvars[item]['ansible_hostname'] }}" {
   vars.postgresql_is_hot_standby = "{{ obj.postgresql_is_hot_standby }}"
 {% endif %}
 {% if obj.postgresql_backends is defined %}
-  vars.postgresql_backends =  "{{ obj.postgresql_is_backends_check }}"
+  vars.postgresql_backends =  "{{ obj.postgresql_is_backends }}"
   vars.postgresql_backends_warning = "{{ obj.postgresql_is_backends_warning }}"
   vars.postgresql_backends_critical = "{{ obj.postgresql_is_backends_critical }}"
 {% endif %}
