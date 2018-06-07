@@ -55,7 +55,7 @@ icinga_load_threshold_check: 2
 # password must be on the host in /var/lib/nagios/.pgpass
 # - icinga2_host_postgresql_check:
 #      postgresql_host: "127.0.0.1"
-#      postgresql_post: "5431"
+#      postgresql_port: "5431"
 #      postgresql_user: "postgres"
 #      postgresql_database: "postgres"
 #      postgresql_connection: "true"
