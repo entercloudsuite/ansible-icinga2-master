@@ -51,6 +51,24 @@ icinga_load_threshold_check: 2
 #     mysql_password: "password"
 #     group: "database" # ansible group
 
+# Postgres check status
+# password must be on the host in /var/lib/nagios/.pgpass
+# - icinga2_host_postgresql_check:
+#      postgresql_host: "127.0.0.1"
+#      postgresql_post: "5431"
+#      postgresql_user: "postgres"
+#      postgresql_database: "postgres"
+#      postgresql_connection: "true"
+#      postgresql_backend_status: "true"
+#      postgresql_is_master: "true"
+#      postgresql_is_hot_standby: "true"
+#      postgresql_backends: "true"
+#      postgresql_backends_warning: "75"
+#      postgresql_backends_critical: "96"
+#      postgresql_streaming_delta: "true"
+#      postgresql_streaming_delta_warning: "1G"
+#      postgresql_streaming_delta_critical: "2G"
+
 # Elasticsearch check status
 # icinga2_host_elasticsearch_check:
 #   - group: "elasticsearch" # ansible group

@@ -80,3 +80,121 @@ apply Service "File Count Check" for (folder => config in host.vars.filecount_pa
 
   assign where host.vars.filecount_path
 }
+
+apply Service "Postgresql Connection Check" {
+  import "generic-service"
+  check_command = "pgactivity"
+  vars.notification_mail = "true"
+  vars.notification_telegram = "true"
+
+  vars.pgactivity_host = host.vars.postgresql_host
+  vars.pgactivity_user = host.vars.postgresql_user
+  vars.pgactivity_port = host.vars.postgresql_port
+  vars.pgactivity_database = host.vars.postgresql_database
+  vars.pgactivity_warning = host.vars.postgresql_backends_warning
+  vars.pgactivity_critical = host.vars.postgresql_backends_critical
+  vars.pgactivity_service = "connection"
+  command_endpoint = host.vars.endpoint
+
+  assign where host.vars.postgresql_connection == true
+}
+
+apply Service "Postgresql Is Hot Standby Check" {
+  import "generic-service"
+  check_command = "pgactivity"
+  vars.notification_mail = "true"
+  vars.notification_telegram = "true"
+
+  vars.pgactivity_host = host.vars.postgresql_host
+  vars.pgactivity_user = host.vars.postgresql_user
+  vars.pgactivity_port = host.vars.postgresql_port
+  vars.pgactivity_database = host.vars.postgresql_database
+  vars.pgactivity_service = "is_hot_standby"
+  command_endpoint = host.vars.endpoint
+
+  assign where host.vars.postgresql_is_hot_standby == true
+}
+
+apply Service "Postgresql Is Master Check" {
+  import "generic-service"
+  check_command = "pgactivity"
+  vars.notification_mail = "true"
+  vars.notification_telegram = "true"
+
+  vars.pgactivity_host = host.vars.postgresql_host
+  vars.pgactivity_user = host.vars.postgresql_user
+  vars.pgactivity_port = host.vars.postgresql_port
+  vars.pgactivity_database = host.vars.postgresql_database
+  vars.pgactivity_service = "is_master"
+  command_endpoint = host.vars.endpoint
+
+  assign where host.vars.postgresql_is_master == true
+}
+
+apply Service "Postgresql Is Replay Paused Check" {
+  import "generic-service"
+  check_command = "pgactivity"
+  vars.notification_mail = "true"
+  vars.notification_telegram = "true"
+
+  vars.pgactivity_host = host.vars.postgresql_host
+  vars.pgactivity_user = host.vars.postgresql_user
+  vars.pgactivity_port = host.vars.postgresql_port
+  vars.pgactivity_database = host.vars.postgresql_database
+  vars.pgactivity_service = "is_replay_paused"
+  command_endpoint = host.vars.endpoint
+
+  assign where host.vars.postgresql_is_replay_paused == true
+}
+
+apply Service "Postgresql Is Backend Status Check" {
+  import "generic-service"
+  check_command = "pgactivity"
+  vars.notification_mail = "true"
+  vars.notification_telegram = "true"
+
+  vars.pgactivity_host = host.vars.postgresql_host
+  vars.pgactivity_user = host.vars.postgresql_user
+  vars.pgactivity_port = host.vars.postgresql_port
+  vars.pgactivity_database = host.vars.postgresql_database
+  vars.pgactivity_service = "backends_status"
+  command_endpoint = host.vars.endpoint
+
+  assign where host.vars.postgresql_backend_status == true
+}
+
+apply Service "Postgresql Streaming Delta Check" {
+  import "generic-service"
+  check_command = "pgactivity"
+  vars.notification_mail = "true"
+  vars.notification_telegram = "true"
+
+  vars.pgactivity_host = host.vars.postgresql_host
+  vars.pgactivity_user = host.vars.postgresql_user
+  vars.pgactivity_port = host.vars.postgresql_port
+  vars.pgactivity_database = host.vars.postgresql_database
+  vars.pgactivity_service = host.vars.streaming_delta
+  vars.pgactivity_warning = host.vars.postgresql_streaming_delta_warning
+  vars.pgactivity_critical = host.vars.postgresql_streaming_delta_critical
+  command_endpoint = host.vars.endpoint
+
+  assign where host.vars.postgresql_delta == true
+}
+
+apply Service "Postgresql Backends Check" {
+  import "generic-service"
+  check_command = "pgactivity"
+  vars.notification_mail = "true"
+  vars.notification_telegram = "true"
+
+  vars.pgactivity_host = host.vars.postgresql_host
+  vars.pgactivity_user = host.vars.postgresql_user
+  vars.pgactivity_port = host.vars.postgresql_port
+  vars.pgactivity_database = host.vars.postgresql_database
+  vars.pgactivity_service = "backends"
+  vars.pgactivity_warning = host.vars.postgresql_backends_warning
+  vars.pgactivity_critical = host.vars.postgresql_backends_critical
+  command_endpoint = host.vars.endpoint
+
+  assign where host.vars.postgresql_backends == true
+}
