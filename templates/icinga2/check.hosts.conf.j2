@@ -83,24 +83,24 @@ object Host "{{ hostvars[item]['ansible_hostname'] }}" {
   vars.postgresql_user = "{{ obj.postgresql_user }}"
   vars.postgresql_database = "{{ obj.postgresql_database }}"
 {% if obj.postgresql_connection is defined %}
-  vars.postgresql_connection = "{{ obj.postgresql_connection }}"
+  vars.postgresql_connection = true
 {% endif %}
 {% if obj.postgresql_backend_status is defined %}
-  vars.postgresql_backend_status = "{{ obj.postgresql_backend_status }}"
+  vars.postgresql_backend_status = true
 {% endif %}
 {% if obj.postgresql_is_master is defined %}
-  vars.postgresql_is_master = "{{ obj.postgresql_is_master }}"
+  vars.postgresql_is_master = true
 {% endif %}
 {% if obj.postgresql_is_hot_standby is defined %}
-  vars.postgresql_is_hot_standby = "{{ obj.postgresql_is_hot_standby }}"
+  vars.postgresql_is_hot_standby = true
 {% endif %}
 {% if obj.postgresql_backends is defined %}
-  vars.postgresql_backends =  "{{ obj.postgresql_backends }}"
+  vars.postgresql_backends =  true
   vars.postgresql_backends_warning = "{{ obj.postgresql_backends_warning }}"
   vars.postgresql_backends_critical = "{{ obj.postgresql_backends_critical }}"
 {% endif %}
 {% if obj.postgresql_streaming_delta is defined %}
-  vars.postgresql_streaming_delta = "{{ obj.postgresql_streaming_delta }}"
+  vars.postgresql_streaming_delta = true
   vars.postgresql_streaming_delta_warning = "{{ obj.postgresql_streaming_delta_warning }}"
   vars.postgresql_streaming_delta_critical = "{{ obj.postgresql_streaming_delta_critical }}"
 {% endif %}
