@@ -173,7 +173,7 @@ apply Service "Postgresql Streaming Delta Check" {
   vars.pgactivity_user = host.vars.postgresql_user
   vars.pgactivity_port = host.vars.postgresql_port
   vars.pgactivity_database = host.vars.postgresql_database
-  vars.pgactivity_service = host.vars.postgresql_streaming_delta
+  vars.pgactivity_service = "streaming_delta"
   vars.pgactivity_warning = host.vars.postgresql_streaming_delta_warning
   vars.pgactivity_critical = host.vars.postgresql_streaming_delta_critical
   command_endpoint = host.vars.endpoint
