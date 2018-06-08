@@ -178,7 +178,7 @@ apply Service "Postgresql Streaming Delta Check" {
   vars.pgactivity_critical = host.vars.postgresql_streaming_delta_critical
   command_endpoint = host.vars.endpoint
 
-  assign where host.vars.postgresql_delta == true
+  assign where host.vars.postgresql_streaming_delta == true
 }
 
 apply Service "Postgresql Backends Check" {
