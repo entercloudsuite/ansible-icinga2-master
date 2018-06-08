@@ -47,6 +47,16 @@ done
 
 
 num_nodes=$($HADOOP_BIN dfsadmin -report  | grep Live | awk -F "):"  '{ print  $1 }' | awk -F "(" '{ print $2 }')
+
+if [ $num_nodes -eq $num_nodes 2> /dev/null ]; then
+    sleep 1
+else
+    echo "CRITICAL - No info from dfsadmin"
+    exit 2
+fi
+
+
+
 if [ $num_nodes -le $CRITICAL ]
 then
     echo "CRITICAL - Nodes available $num_nodes"
