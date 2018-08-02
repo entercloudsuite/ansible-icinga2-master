@@ -198,3 +198,21 @@ apply Service "Postgresql Backends Check" {
 
   assign where host.vars.postgresql_backends == true
 }
+
+apply Service "Postgresql Longest Query" {
+  import "generic-service"
+  check_command = "pgactivity"
+  vars.notification_mail = "true"
+  vars.notification_telegram = "true"
+
+  vars.pgactivity_host = host.vars.postgresql_host
+  vars.pgactivity_user = host.vars.postgresql_user
+  vars.pgactivity_port = host.vars.postgresql_port
+  vars.pgactivity_database = host.vars.postgresql_database
+  vars.pgactivity_service = "longest_query"
+  vars.pgactivity_warning = host.vars.postgresql_longest_query_warning
+  vars.pgactivity_critical = host.vars.postgresql_longest_query_critical
+  command_endpoint = host.vars.endpoint
+
+  assign where host.vars.postgresql_backends == true
+}

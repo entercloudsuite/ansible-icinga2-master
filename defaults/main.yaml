@@ -68,6 +68,9 @@ icinga_load_threshold_check: 2
 #      postgresql_streaming_delta: "true"
 #      postgresql_streaming_delta_warning: "1G"
 #      postgresql_streaming_delta_critical: "2G"
+#      postgresql_longest_query: 'true'
+#      postgresql_longest_query_warning: '7200'
+#      postgresql_longest_query_critical: '8000'
 #      group: "database" # ansible group
 
 # Elasticsearch check status
