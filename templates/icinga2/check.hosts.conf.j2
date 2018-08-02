@@ -104,6 +104,11 @@ object Host "{{ hostvars[item]['ansible_hostname'] }}" {
   vars.postgresql_streaming_delta_warning = "{{ obj.postgresql_streaming_delta_warning }}"
   vars.postgresql_streaming_delta_critical = "{{ obj.postgresql_streaming_delta_critical }}"
 {% endif %}
+{% if obj.postgresql_longest_query is defined %}
+  vars.postgresql_longest_query = true
+  vars.postgresql_longest_query_warning = "{{ obj.postgresql_longest_query_warning }}"
+  vars.postgresql_longest_query_critical = "{{ obj.postgresql_longest_query_critical }}"
+{% endif %}
 {% endif %}
 {% endfor %}
 {% endif %}

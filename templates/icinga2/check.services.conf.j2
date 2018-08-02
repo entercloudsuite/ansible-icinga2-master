@@ -214,5 +214,5 @@ apply Service "Postgresql Longest Query" {
   vars.pgactivity_critical = host.vars.postgresql_longest_query_critical
   command_endpoint = host.vars.endpoint
 
-  assign where host.vars.postgresql_backends == true
+  assign where host.vars.postgresql_longest_query == true
 }
