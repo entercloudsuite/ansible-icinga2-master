@@ -113,6 +113,27 @@ object Host "{{ hostvars[item]['ansible_hostname'] }}" {
 {% endfor %}
 {% endif %}
 
+{% if icinga2_host_activemq_check is defined %}
+{% for obj in icinga2_host_activemq_check %}
+{% if hostvars[item]['inventory_hostname'] in groups[obj.group] %}
+  vars.activemq_address["{{ obj.activemq_host }}"] = {
+    activemq_port = "{{ obj.activemq_port }}"
+    activemq_user = "{{ obj.activemq_user }}"
+    activemq_password = "{{ obj.activemq_password }}"
+{% if obj.activemq_queue_type is defined %}
+    activemq_queue = true
+    activemq_queue_type = "{{ obj.activemq_queue_type }}"
+{% if obj.activemq_name is defined %}
+    activemq_queue_name = "{{ obj.activemq_queue_name }}"
+{% endif %}
+    activemq_queue_warning = "{{ obj.activemq_queue_warning }}"
+    activemq_queue_critical = "{{ obj.activemq_queue_critical }}"
+{% endif %}
+  }
+{% endif %}
+{% endfor %}
+{% endif %}
+
   vars.os = "Linux"
   vars.endpoint = "{{ hostvars[item]['ansible_hostname'] }}"
   groups =["{{ hostvars[item]['ansible_hostname'] }}"]

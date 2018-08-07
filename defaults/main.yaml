@@ -39,21 +39,22 @@ icinga_load_threshold_check: 2
 
 # ICINGA2 OPTIONAL CHECK
 # Url http check on web host (http_check directly on localhost)
-# icinga2_host_url_check:
-#   - url: "www.example.com"
+# - icinga2_host_url_check:
+#   - group: "webserver" # ansible group
+#     url: "www.example.com"
 #     path: "/"
-#     group: "webserver" # ansible group
 #     backup_downtime: "21:00-23:59,00:00-07:00" # optional
 
 # Mysql check status
-# icinga2_host_mysql_check:
-#   - mysql_username: "mysql-user"
+# - icinga2_host_mysql_check:
+#   - group: "database" # ansible group
+#     mysql_username: "mysql-user"
 #     mysql_password: "password"
-#     group: "database" # ansible group
 
 # Postgres check status
 # password must be on the host in /var/lib/nagios/.pgpass
 # - icinga2_host_postgresql_check:
+#   -  group: "database" # ansible group
 #      postgresql_host: "127.0.0.1"
 #      postgresql_port: "5431"
 #      postgresql_user: "postgres"
@@ -71,29 +72,39 @@ icinga_load_threshold_check: 2
 #      postgresql_longest_query: 'true'
 #      postgresql_longest_query_warning: '7200'
 #      postgresql_longest_query_critical: '8000'
-#      group: "database" # ansible group
 
 # Elasticsearch check status
-# icinga2_host_elasticsearch_check:
+# - icinga2_host_elasticsearch_check:
 #   - group: "elasticsearch" # ansible group
 #     es_port: "9200" # default elasticserach server port
 
 # Hadoop cluster available nodes
-#   - icinga2_host_hadoop_check:
-#      - group: "hadoop"
-#        warning_nodes: "3"
-#        critical_nodes: "0"
-
+# - icinga2_host_hadoop_check:
+#    - group: "hadoop"
+#      warning_nodes: "3"
+#      critical_nodes: "0"
 
 # Count file/dir inside a path
-# icinga2_host_file_count_check:
-#   - filecount_path: "/mydir"
+# - icinga2_host_file_count_check:
+#   - group: "webserver" # ansible group
+#     filecount_path: "/mydir"
 #     file_count_type: "all"
 #     file_count_subs: "yes"
 #     file_count_warntype: "high"
 #     file_count_warncount: "50"
 #     file_count_critcount: "50"
-#     group: "webserver" # ansible group
+
+# Activemq check status
+# - icinga2_host_activemq_check:
+#   - group: "activemq" # ansible group
+#     activemq_host: "127.0.0.1"
+#     activemq_port: "8161"
+#     activemq_user: "admin"
+#     activemq_password: "admin"
+#     activemq_queue_type: "queues" # or topics
+#     activemq_queue_name: "test" # if not defined all queues are checked
+#     activemq_queue_warning: "10"
+#     activemq_queue_critical: "11"
 
 # ICINGA2 NOTIFICATION
 icinga2_host_notification_period: "3600"

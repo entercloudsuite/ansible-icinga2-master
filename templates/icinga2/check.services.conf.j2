@@ -216,3 +216,26 @@ apply Service "Postgresql Longest Query" {
 
   assign where host.vars.postgresql_longest_query == true
 }
+
+apply Service "Activemq queue size " for (target => config in host.vars.activemq_address) {
+  import "generic-service"
+  check_command = "activemq"
+  vars.notification_mail = "true"
+{% if icinga2_notification_telegram is defined %}
+  vars.notification_telegram = "true"
+{% endif %}
+
+  vars += config
+  notes = "Activemq queue size for target"
+  vars.activemq_address = target
+  vars.activemq_user = config.activemq_user
+  vars.activemq_password = config.activemq_password
+  vars.activemq_port = config.activemq_port
+  vars.activemq_queue_type = config.activemq_queue_type
+  vars.activemq_queue_name = config.activemq_queue_name
+  vars.activemq_queue_warning = config.activemq_queue_warning
+  vars.activemq_queue_critical = config.activemq_queue_critical
+  command_endpoint = config.endpoint
+
+  assign where host.vars.activemq_address
+}
