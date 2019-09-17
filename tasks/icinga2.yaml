@@ -113,6 +113,11 @@
     dest: /etc/icinga2/scripts/
     mode: 0755
 
+- name: Setting templates
+  template:
+    src: icinga2/templates.conf.j2
+    dest: /etc/icinga2/conf.d/templates.conf
+
 - name: Setting zone definition
   template:
     src: icinga2/zones.conf.j2
