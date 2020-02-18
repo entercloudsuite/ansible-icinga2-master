@@ -129,6 +129,7 @@ icinga2_notification_users:
 #     name: "Icinga User"
 #     email: "root2@localhost"
 
+icinga2_notification_telegram_period: 24x7
 #icinga2_notification_telegram:
 #  - name: "Icinga2 Telegram"
 #    chat_id: "111111111"

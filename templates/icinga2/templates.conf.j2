@@ -59,7 +59,7 @@ template Notification "telegram-host-notification" {
   types = [ Problem, Acknowledgement, Recovery, Custom,
             FlappingStart, FlappingEnd ]
 
-  period = "24x7"
+  period = "{{ icinga2_notification_telegram_period }}"
 }
 
 template Notification "telegram-service-notification" {
@@ -69,5 +69,5 @@ template Notification "telegram-service-notification" {
   types = [ Problem, Acknowledgement, Recovery, Custom,
             FlappingStart, FlappingEnd ]
 
-  period = "24x7"
+  period = "{{ icinga2_notification_telegram_period }}"
 }
